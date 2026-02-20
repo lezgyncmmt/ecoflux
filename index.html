@@ -847,3 +847,52 @@ document.querySelectorAll('.module,.mod-box,.gm-cell,.sim-box').forEach(el=>{
 </script>
 </body>
 </html>
+<!-- Metrics Section -->
+<div class="metrics">
+  <div>Plastic Processed: <span id="plastic-counter">0</span> tons</div>
+  <div>Diesel Produced: <span id="diesel-counter">0</span> L</div>
+  <div>Carbon Recovered: <span id="carbon-counter">0</span> kg</div>
+  <div>Water Purified: <span id="water-counter">0</span> L</div>
+  <div>Total Energy: <span id="energy-counter">0</span> kWh</div>
+</div>
+
+<script>
+// Demo start values
+const metrics = {
+  "plastic-counter": 12400,
+  "diesel-counter": 6300,
+  "carbon-counter": 1120,
+  "water-counter": 54000,
+  "energy-counter": 182400
+};
+
+function animateCounter(id, value){
+    let display = document.getElementById(id);
+    let current = 0;
+    let step = value / 100; // smooth increment
+    function update(){
+        current += step;
+        if(current >= value) current = value;
+        display.innerText = Math.floor(current);
+        if(current < value) requestAnimationFrame(update);
+    }
+    update();
+}
+
+// Run all counters
+for(const id in metrics){
+    animateCounter(id, metrics[id]);
+}
+
+// Optional: simulate live increment every few seconds
+setInterval(() => {
+  for(const id in metrics){
+      let el = document.getElementById(id);
+      let randomIncrease = Math.floor(Math.random() * 5); // small change
+      let newValue = parseInt(el.innerText) + randomIncrease;
+      if(newValue > metrics[id]) newValue = metrics[id];
+      el.innerText = newValue;
+  }
+}, 2000);
+
+</script>
